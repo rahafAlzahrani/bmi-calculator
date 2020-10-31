@@ -4,14 +4,19 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.10.0
+  hive: ^1.4.1+1
+  #used to store local state
+  path_provider: ^1.6.5
+  provider: ^4.3.1
+  #used to manage global app state
+
 
 dev_dependencies:
   flutter_test:

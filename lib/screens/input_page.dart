@@ -5,8 +5,10 @@ import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/components/round_icon_button.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:bmi_calculator/screens/result_page.dart';
+import 'package:bmi_calculator/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 enum Gender { male, female }
 
@@ -17,15 +19,30 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
-  int height = 180;
+  int height = 170;
   int weight = 50;
-  int age = 20;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI CALCULATOR'),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              themeProvider.isLightTheme
+                  ? FontAwesomeIcons.moon
+                  : FontAwesomeIcons.sun,
+            ),
+            onPressed: () {
+              themeProvider.toggleThemeData();
+            },
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,16 +52,18 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    //the property that we added to ReusableCard class
                     onPress: () {
                       setState(() {
                         selectedGender = Gender.male;
                       });
                     },
-                    /////////////
                     color: selectedGender == Gender.male
-                        ? kActiveCardColor
-                        : kInactiveCardColor,
+                        ? (themeProvider.isLightTheme
+                            ? kActiveCardColorL
+                            : kActiveCardColorD)
+                        : (themeProvider.isLightTheme
+                            ? kInactiveCardColorL
+                            : kInactiveCardColorD),
                     cardChild: IconContent(
                       icon: FontAwesomeIcons.mars,
                       label: 'MALE',
@@ -59,10 +78,13 @@ class _InputPageState extends State<InputPage> {
                         selectedGender = Gender.female;
                       });
                     },
-                    /////////////
                     color: selectedGender == Gender.female
-                        ? kActiveCardColor
-                        : kInactiveCardColor,
+                        ? (themeProvider.isLightTheme
+                            ? kActiveCardColorL
+                            : kActiveCardColorD)
+                        : (themeProvider.isLightTheme
+                            ? kInactiveCardColorL
+                            : kInactiveCardColorD),
                     cardChild: IconContent(
                       icon: FontAwesomeIcons.venus,
                       label: 'FEMALE',
@@ -74,7 +96,9 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableCard(
-              color: kActiveCardColor,
+              color: themeProvider.isLightTheme
+                  ? kActiveCardColorL
+                  : kActiveCardColorD,
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -102,8 +126,8 @@ class _InputPageState extends State<InputPage> {
                         overlayRadius: 30.0,
                       ),
                       thumbColor: kBottomContainerColor,
-                      activeTrackColor: Colors.white,
-                      overlayColor: Color(0x29EB1555),
+                      activeTrackColor: Color(0xFF5ccae0),
+                      overlayColor: Color(0x295ccae0),
                       trackHeight: 1.0,
                     ),
                     child: Slider(
@@ -127,7 +151,9 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    color: kActiveCardColor,
+                    color: themeProvider.isLightTheme
+                        ? kActiveCardColorL
+                        : kActiveCardColorD,
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -167,7 +193,9 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: kActiveCardColor,
+                    color: themeProvider.isLightTheme
+                        ? kActiveCardColorL
+                        : kActiveCardColorD,
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
